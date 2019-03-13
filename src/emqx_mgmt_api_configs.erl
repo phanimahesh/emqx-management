@@ -93,7 +93,7 @@ update_plugin_configs(#{node := Node, plugin := Plugin}, Params) ->
 
 ensure_reload_plugin(Plugin) ->
     case lists:keyfind(Plugin, 2, emqx_plugins:list()) of
-        {_, _, _, _, true} ->
+        #mqtt_plugin{active = true} ->
             emqx_plugins:unload(Plugin),
             timer:sleep(500),
             emqx_plugins:load(Plugin);
